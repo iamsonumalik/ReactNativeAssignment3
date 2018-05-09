@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "name": "React Native Assignment 3",
+    "version": "1.0.0",
+    "slug": "your-app-slug",
+    "sdkVersion": "23.0.0",
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname"
+    },
+    "android": {
+      "package": "com.yourcompany.yourappname"
+    }
   }
 }
