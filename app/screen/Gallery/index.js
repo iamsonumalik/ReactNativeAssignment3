@@ -90,7 +90,10 @@ class galleryScreen extends React.Component {
     _renderRow(itemData, section, index) {
         return (
             <View>
-                <Lightbox>
+                <Lightbox
+                    springConfig={{
+                        tension: 900000, friction: 900000
+                    }}>
                     <Image
                         style={Styles.image}
                         source={{uri: itemData.image}}
