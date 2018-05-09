@@ -5,6 +5,7 @@ const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     headerBackground: {
         backgroundColor: '#1d2548',
+        borderColor: '#1d2548'
     },
     header: {
         padding: 20,

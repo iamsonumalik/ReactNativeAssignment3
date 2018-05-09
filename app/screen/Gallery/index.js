@@ -175,7 +175,9 @@ class galleryScreen extends React.Component {
                     </Body>
                 </Header>
                 <Tabs
-                    renderTabBar={() => <ScrollableTab/>}
+                    renderTabBar={() => <ScrollableTab
+                        style={Styles.headerBackground}
+                    />}
                     locked={true}
                     initialPage={0}
                     page={this.state.activeTab}
