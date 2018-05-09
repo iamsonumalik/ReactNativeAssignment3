@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "slug": "ReactNativeAssignment3",
     "sdkVersion": "23.0.0",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.yourcompany.yourappname"
     },
