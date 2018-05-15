@@ -1,6 +1,6 @@
 import React from 'react'
-import {View, Text, ListView, Image, Dimensions} from 'react-native'
-import {Tabs, Tab, ScrollableTab, Header, Body, Title} from 'native-base'
+import { View, Text, ListView, Image, Dimensions } from 'react-native'
+import { Tabs, Tab, ScrollableTab, Header, Body, Title } from 'native-base'
 import Lightbox from 'react-native-lightbox'
 import Styles from './styles';
 
@@ -74,7 +74,7 @@ class galleryScreen extends React.Component {
             }
         });
 
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             data: initialData,
             dataSource: this.ds.cloneWithRows(initialData),
@@ -96,12 +96,12 @@ class galleryScreen extends React.Component {
                     }}>
                     <Image
                         style={Styles.image}
-                        source={{uri: itemData.image}}
+                        source={{ uri: itemData.image }}
                     />
                 </Lightbox>
                 <Text style={Styles.imageTitle}>{itemData.title}</Text>
                 {
-                    index === (this.state.length - 1) ? <View style={{flex: 1, height: 2 * imageHeight}}/> : <View/>
+                    index === (this.state.length - 1) ? <View style={{ flex: 1, height: 2 * imageHeight }} /> : <View />
                 }
             </View>
         )
@@ -152,7 +152,7 @@ class galleryScreen extends React.Component {
                 scrollToHeight: imageIndex * imageHeight,
                 activeTab: i.i
             });
-            this.listView.scrollTo({y: imageIndex * imageHeight, animated: false});
+            this.listView.scrollTo({ y: imageIndex * imageHeight, animated: false });
         }
     }
 
@@ -171,7 +171,7 @@ class galleryScreen extends React.Component {
             <View>
                 <Header style={Styles.headerBackground}>
                     <Body>
-                    <Title>Photo Gallery</Title>
+                        <Title style={{ color: '#fff' }}>Photo Gallery</Title>
                     </Body>
                 </Header>
                 <Tabs
@@ -182,13 +182,15 @@ class galleryScreen extends React.Component {
                     initialPage={0}
                     page={this.state.activeTab}
                     onChangeTab={this._onChangeTab.bind(this)}
-                    style={{flex: 0}}>
+                    style={{ flex: 0 }}>
                     {
                         this.state.tabs.map((tab) => {
                             return (
                                 <Tab
                                     tabStyle={Styles.headerBackground}
                                     activeTabStyle={Styles.headerBackground}
+                                    topTabBarTextColor="#f00"
+                                    topTabBarActiveTextColor="#f00"
                                     heading={tab}
                                     key={tab}
                                 />

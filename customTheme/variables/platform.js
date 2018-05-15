@@ -7,7 +7,7 @@ const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
 const platformStyle = undefined;
 const isIphoneX
-		= platform === 'ios' && deviceHeight === 812 && deviceWidth === 375;
+	= platform === 'ios' && deviceHeight === 812 && deviceWidth === 375;
 
 export default {
 	platformStyle,
@@ -28,52 +28,52 @@ export default {
 	btnFontFamily: platform === 'ios' ? 'System' : 'Roboto_medium',
 	btnDisabledBg: '#b5b5b5',
 	buttonPadding: 6,
-	get btnPrimaryBg () {
+	get btnPrimaryBg() {
 		return this.brandPrimary;
 	},
-	get btnPrimaryColor () {
+	get btnPrimaryColor() {
 		return this.inverseTextColor;
 	},
-	get btnInfoBg () {
+	get btnInfoBg() {
 		return this.brandInfo;
 	},
-	get btnInfoColor () {
+	get btnInfoColor() {
 		return this.inverseTextColor;
 	},
-	get btnSuccessBg () {
+	get btnSuccessBg() {
 		return this.brandSuccess;
 	},
-	get btnSuccessColor () {
+	get btnSuccessColor() {
 		return this.inverseTextColor;
 	},
-	get btnDangerBg () {
+	get btnDangerBg() {
 		return this.brandDanger;
 	},
-	get btnDangerColor () {
+	get btnDangerColor() {
 		return this.inverseTextColor;
 	},
-	get btnWarningBg () {
+	get btnWarningBg() {
 		return this.brandWarning;
 	},
-	get btnWarningColor () {
+	get btnWarningColor() {
 		return this.inverseTextColor;
 	},
-	get btnTextSize () {
+	get btnTextSize() {
 		return platform === 'ios' ? this.fontSizeBase * 1.1 : this.fontSizeBase - 1;
 	},
-	get btnTextSizeLarge () {
+	get btnTextSizeLarge() {
 		return this.fontSizeBase * 1.5;
 	},
-	get btnTextSizeSmall () {
+	get btnTextSizeSmall() {
 		return this.fontSizeBase * 0.8;
 	},
-	get borderRadiusLarge () {
+	get borderRadiusLarge() {
 		return this.fontSizeBase * 3.8;
 	},
-	get iconSizeLarge () {
+	get iconSizeLarge() {
 		return this.iconFontSize * 1.5;
 	},
-	get iconSizeSmall () {
+	get iconSizeSmall() {
 		return this.iconFontSize * 0.6;
 	},
 
@@ -106,13 +106,13 @@ export default {
 	// Font
 	fontFamily: platform === 'ios' ? 'System' : 'Roboto',
 	fontSizeBase: 15,
-	get fontSizeH1 () {
+	get fontSizeH1() {
 		return this.fontSizeBase * 1.8;
 	},
-	get fontSizeH2 () {
+	get fontSizeH2() {
 		return this.fontSizeBase * 1.6;
 	},
-	get fontSizeH3 () {
+	get fontSizeH3() {
 		return this.fontSizeBase * 1.4;
 	},
 
@@ -140,12 +140,12 @@ export default {
 	toolbarBtnTextColor: '#000',
 	toolbarDefaultBorder: '#a7a6ab',
 	iosStatusbar: platform === 'ios' ? 'dark-content' : 'light-content',
-	get statusBarColor () {
+	get statusBarColor() {
 		return color(this.toolbarDefaultBg)
 			.darken(0.2)
 			.hex();
 	},
-	get darkenHeader () {
+	get darkenHeader() {
 		return color(this.tabBgColor)
 			.darken(0.03)
 			.hex();
@@ -162,10 +162,10 @@ export default {
 	inputSuccessBorderColor: '#2b8339',
 	inputErrorBorderColor: '#ed2f2f',
 	inputHeightBase: 50,
-	get inputColor () {
+	get inputColor() {
 		return this.textColor;
 	},
-	get inputColorPlaceholder () {
+	get inputColorPlaceholder() {
 		return '#575757';
 	},
 
@@ -209,8 +209,8 @@ export default {
 
 	// Tab
 	tabDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
-	topTabBarTextColor: platform === 'ios' ? '#6b6b6b' : '#b3c7f9',
-	topTabBarActiveTextColor: platform === 'ios' ? '#007aff' : '#fff',
+	topTabBarTextColor: platform === 'ios' ? '#b3c7f9' : '#b3c7f9',
+	topTabBarActiveTextColor: platform === 'ios' ? '#fff' : '#fff',
 	topTabBarBorderColor: platform === 'ios' ? '#a7a6ab' : '#fff',
 	topTabBarActiveBorderColor: platform === 'ios' ? '#007aff' : '#fff',
 
@@ -222,7 +222,7 @@ export default {
 	textColor: '#000',
 	inverseTextColor: '#fff',
 	noteFontSize: 14,
-	get defaultTextColor () {
+	get defaultTextColor() {
 		return this.textColor;
 	},
 
@@ -230,7 +230,7 @@ export default {
 	titleFontfamily: platform === 'ios' ? 'System' : 'Roboto_medium',
 	titleFontSize: platform === 'ios' ? 17 : 19,
 	subTitleFontSize: platform === 'ios' ? 12 : 14,
-	subtitleColor: platform === 'ios' ? '#8e8e93' : '#FFF',
+	subtitleColor: platform === 'ios' ? '#FFF' : '#FFF',
 	titleFontColor: platform === 'ios' ? '#000' : '#FFF',
 
 	// Other
