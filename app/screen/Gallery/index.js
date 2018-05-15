@@ -1,62 +1,13 @@
 import React from 'react'
-import { View, Text, ListView, Image, Dimensions } from 'react-native'
-import { Tabs, Tab, ScrollableTab, Header, Body, Title } from 'native-base'
+import {View, TouchableHighlight, Text, ListView, Image, Dimensions} from 'react-native'
+import {Tabs, Tab, TabHeading , ScrollableTab, Header, Body, Title} from 'native-base'
 import Lightbox from 'react-native-lightbox'
 import Styles from './styles';
+import {parsedData} from '../../helper/sample'
 
 const window = Dimensions.get('window');
 const imageHeight = window.height / 3 + 2 * 15 + 20;
-
-const initialData = [{
-    title: 'Main',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/main/main-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180201054506.jpg',
-}, {
-    title: 'Main',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/main/main-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180201054506.jpg',
-}, {
-    title: 'Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/room-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031000.jpg',
-}, {
-    title: 'Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/room-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031027.jpg'
-}, {
-    title: 'Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/room-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031047.jpg'
-}, {
-    title: 'Bathroom',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/bathroom-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031306.jpg'
-}, {
-    title: 'Bathroom',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/bathroom-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031323.jpg'
-}, {
-    title: 'Other',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/other-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031513.jpg',
-}, {
-    title: 'Other',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/other-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031532.jpg'
-}, {
-    title: 'Other',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/other-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017031550.jpg'
-}, {
-    title: 'Deluxe Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017032714.jpg',
-}, {
-    title: 'Deluxe Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180420034331.jpg'
-}, {
-    title: 'Deluxe Room',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180420034400.jpg'
-}, {
-    title: 'Executive',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20171017032719.jpg'
-}, {
-    title: 'Executive',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180420034336.jpg'
-}, {
-    title: 'Executive',
-    image: 'https://pimg.fabhotels.com/propertyimages/665/medium/-photos-fabhotel-4-seasons-silk-board-bangalore-Hotels-20180420034404.jpg'
-}];
-
+const initialData = parsedData()
 
 class galleryScreen extends React.Component {
     static navigationOptions = {
@@ -74,7 +25,7 @@ class galleryScreen extends React.Component {
             }
         });
 
-        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             data: initialData,
             dataSource: this.ds.cloneWithRows(initialData),
@@ -96,50 +47,51 @@ class galleryScreen extends React.Component {
                     }}>
                     <Image
                         style={Styles.image}
-                        source={{ uri: itemData.image }}
+                        source={{uri: itemData.image}}
                     />
                 </Lightbox>
                 <Text style={Styles.imageTitle}>{itemData.title}</Text>
                 {
-                    index === (this.state.length - 1) ? <View style={{ flex: 1, height: 2 * imageHeight }} /> : <View />
+                    index === (this.state.length - 1) ? <View style={{flex: 1, height: 2 * imageHeight}}/> : <View/>
                 }
             </View>
         )
     }
 
     _onEndReached() {
-        let _self = this;
-        setTimeout(() => {
-            _self.updateData();
-        }, 500)
+        // let _self = this;
+        // setTimeout(() => {
+        //     _self.updateData();
+        // }, 500)
     }
 
-    _onScroll(event) {
-        if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
-            this.setState({
-                scrolling: false
-            });
-        } else if (event.nativeEvent.contentOffset.y > 0) {
-            let index = Math.floor(event.nativeEvent.contentOffset.y / imageHeight);
-            if (index !== this.state.topCardIndex) {
+    _setTab(index){
+        if (index !== this.state.topCardIndex) {
+            let currentImage = this.state.data[index];
+            if (currentImage.title !== this.state.activeTagName) {
                 this.setState({
+                    activeTab: this.state.tabs.indexOf(currentImage.title),
+                    activeTabName: currentImage.title,
+                    scrollToHeight: 0,
                     topCardIndex: index
+                })
+            }
+        }
+    }
+    _onScroll(event) {
+        if (this.state.scrollToHeight === 0) {
+            if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
+                this.setState({
+                    scrolling: false
                 });
-
-                let currentImage = this.state.data[index];
-
-                if (currentImage.title !== this.state.activeTagName) {
-                    this.setState({
-                        activeTab: this.state.tabs.indexOf(currentImage.title),
-                        activeTabName: currentImage.title
-                    })
-                }
+            } else if (event.nativeEvent.contentOffset.y > 0) {
+                let index = Math.floor(event.nativeEvent.contentOffset.y / imageHeight);
+                this._setTab(index)
             }
         }
     }
 
-    _onChangeTab(i) {
-        let title = this.state.tabs[i.i];
+    _onTabPressed(title){
         let imageIndex = 0;
         for (; imageIndex < this.state.data.length; imageIndex++) {
             if (title === this.state.data[imageIndex].title) {
@@ -150,9 +102,10 @@ class galleryScreen extends React.Component {
             this.setState({
                 scrolling: true,
                 scrollToHeight: imageIndex * imageHeight,
-                activeTab: i.i
+                activeTab: this.state.tabs.indexOf(title),
+                topCardIndex : this.state.tabs.indexOf(title)
             });
-            this.listView.scrollTo({ y: imageIndex * imageHeight, animated: false });
+            this.listView.scrollTo({y: imageIndex * imageHeight, animated: true});
         }
     }
 
@@ -171,18 +124,17 @@ class galleryScreen extends React.Component {
             <View>
                 <Header style={Styles.headerBackground}>
                     <Body>
-                        <Title style={Styles.headerTitle}>Photo Gallery</Title>
+                    <Title style={Styles.header}>Photo Gallery</Title>
                     </Body>
                 </Header>
                 <Tabs
                     renderTabBar={() => <ScrollableTab
-                        style={[Styles.headerBackground, { marginTop: 0 }]}
+                        style={[Styles.headerBackground, {marginTop: 0}]}
                     />}
                     locked={true}
                     initialPage={0}
                     page={this.state.activeTab}
-                    onChangeTab={this._onChangeTab.bind(this)}
-                    style={{ flex: 0 }}>
+                    style={{flex: 0}}>
                     {
                         this.state.tabs.map((tab) => {
                             return (
@@ -191,7 +143,13 @@ class galleryScreen extends React.Component {
                                     activeTabStyle={Styles.headerBackground}
                                     topTabBarTextColor="#f00"
                                     topTabBarActiveTextColor="#f00"
-                                    heading={tab}
+                                    heading={
+                                        <TabHeading style={Styles.headerBackground}>
+                                            <TouchableHighlight onPress={() => this._onTabPressed(tab)}>
+                                            <Text style = {Styles.tabTitle}>{tab}</Text>
+                                            </TouchableHighlight>
+                                        </TabHeading>
+                                    }
                                     key={tab}
                                 />
                             )

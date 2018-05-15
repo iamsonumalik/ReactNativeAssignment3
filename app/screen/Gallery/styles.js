@@ -5,12 +5,17 @@ const window = Dimensions.get('window');
 const styles = StyleSheet.create({
     headerBackground: {
         backgroundColor: '#1d2548',
-        borderColor: '#1d2548',
+        borderColor: '#1d2548'
     },
     header: {
         padding: 20,
         color: '#ffffff',
         fontSize: 20
+    },
+    tabTitle: {
+        padding: 20,
+        color: '#ffffff',
+        fontSize: 14
     },
     image: {
         width: window.width,
