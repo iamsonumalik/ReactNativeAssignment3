@@ -73,21 +73,23 @@ class galleryScreen extends React.Component {
                     activeTab: this.state.tabs.indexOf(currentImage.title),
                     activeTabName: currentImage.title,
                     scrollToHeight: 0,
-                    topCardIndex: index
+                    topCardIndex: index,
+                    scrolling: false
                 })
             }
         }
     }
     _onScroll(event) {
-        if (this.state.scrollToHeight === 0) {
-            if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
-                this.setState({
-                    scrolling: false
-                });
-            } else if (event.nativeEvent.contentOffset.y > 0) {
-                let index = Math.floor(event.nativeEvent.contentOffset.y / imageHeight);
-                this._setTab(index)
-            }
+        if (this.state.scrollToHeight > 0) {
+            let index = Math.floor(this.state.scrollToHeight / imageHeight);
+            this._setTab(index)
+        }else if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
+            this.setState({
+                scrolling: false
+            });
+        } else if (event.nativeEvent.contentOffset.y > 0) {
+            let index = Math.floor(event.nativeEvent.contentOffset.y / imageHeight);
+            this._setTab(index)
         }
     }
 
@@ -101,9 +103,7 @@ class galleryScreen extends React.Component {
         if (this.listView) {
             this.setState({
                 scrolling: true,
-                scrollToHeight: imageIndex * imageHeight,
-                activeTab: this.state.tabs.indexOf(title),
-                topCardIndex : this.state.tabs.indexOf(title)
+                scrollToHeight: imageIndex * imageHeight
             });
             this.listView.scrollTo({y: imageIndex * imageHeight, animated: true});
         }
