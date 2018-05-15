@@ -171,12 +171,12 @@ class galleryScreen extends React.Component {
             <View>
                 <Header style={Styles.headerBackground}>
                     <Body>
-                        <Title style={{ color: '#fff' }}>Photo Gallery</Title>
+                        <Title style={Styles.headerTitle}>Photo Gallery</Title>
                     </Body>
                 </Header>
                 <Tabs
                     renderTabBar={() => <ScrollableTab
-                        style={Styles.headerBackground}
+                        style={[Styles.headerBackground, { marginTop: 0 }]}
                     />}
                     locked={true}
                     initialPage={0}

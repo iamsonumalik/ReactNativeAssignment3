@@ -131,7 +131,7 @@ export default {
 
 	// Header
 	toolbarBtnColor: '#007aff',
-	toolbarDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
+	toolbarDefaultBg: platform === 'ios' ? '#1d2548' : '#1d2548',
 	toolbarHeight: platform === 'ios' ? (isIphoneX ? 88 : 64) : 56,
 	toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
 	toolbarInputColor: platform === 'ios' ? '#CECDD2' : '#fff',
@@ -215,7 +215,7 @@ export default {
 	topTabBarActiveBorderColor: platform === 'ios' ? '#007aff' : '#fff',
 
 	// Tabs
-	tabBgColor: '#F8F8F8',
+	tabBgColor: '#1d2548',
 	tabFontSize: 15,
 
 	// Text

@@ -1,11 +1,11 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     headerBackground: {
         backgroundColor: '#1d2548',
-        borderColor: '#1d2548'
+        borderColor: '#1d2548',
     },
     header: {
         padding: 20,
@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
         padding: 15,
         fontSize: 15,
         backgroundColor: 'rgb(255,255,255)'
+    },
+    headerTitle: {
+        color: '#fff'
     }
 });
 
