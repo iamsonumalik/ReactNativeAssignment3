@@ -1,7 +1,8 @@
 import React from 'react'
 import {View, TouchableHighlight, Text, ListView, Image, Dimensions} from 'react-native'
-import {Tabs, Tab, TabHeading , ScrollableTab, Header, Body, Title} from 'native-base'
+import {Tabs, Tab, TabHeading, ScrollableTab, Header, Body, Title} from 'native-base'
 import Lightbox from 'react-native-lightbox'
+import ImageZoom from 'react-native-image-pan-zoom';
 import Styles from './styles';
 import {parsedData} from '../../helper/sample'
 
@@ -34,22 +35,28 @@ class galleryScreen extends React.Component {
             tabs: tabs,
             topCardIndex: 0,
             scrollToHeight: 0,
-            scrolling: false
+            scrolling: false,
+            lightboxOpen: false,
+            lightboxImage: 'http://www.rodzinne-wakacje.pl/wp-content/uploads/2017/05/maldives-1993704_960_720.jpg'
         };
     }
 
     _renderRow(itemData, section, index) {
         return (
             <View>
-                <Lightbox
-                    springConfig={{
-                        tension: 900000, friction: 900000
-                    }}>
+                <TouchableHighlight
+                    onPress={() => {
+                        this.setState({
+                            lightboxOpen: true,
+                            lightboxImage: itemData.image
+                        })
+                    }}
+                >
                     <Image
                         style={Styles.image}
                         source={{uri: itemData.image}}
                     />
-                </Lightbox>
+                </TouchableHighlight>
                 <Text style={Styles.imageTitle}>{itemData.title}</Text>
                 {
                     index === (this.state.length - 1) ? <View style={{flex: 1, height: 2 * imageHeight}}/> : <View/>
@@ -65,7 +72,7 @@ class galleryScreen extends React.Component {
         // }, 500)
     }
 
-    _setTab(index){
+    _setTab(index) {
         if (index !== this.state.topCardIndex) {
             let currentImage = this.state.data[index];
             if (currentImage.title !== this.state.activeTagName) {
@@ -79,11 +86,12 @@ class galleryScreen extends React.Component {
             }
         }
     }
+
     _onScroll(event) {
         if (this.state.scrollToHeight > 0) {
             let index = Math.floor(this.state.scrollToHeight / imageHeight);
             this._setTab(index)
-        }else if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
+        } else if (this.state.scrolling && Math.floor(event.nativeEvent.contentOffset.y) === Math.floor(this.state.scrollToHeight)) {
             this.setState({
                 scrolling: false
             });
@@ -93,7 +101,7 @@ class galleryScreen extends React.Component {
         }
     }
 
-    _onTabPressed(title){
+    _onTabPressed(title) {
         let imageIndex = 0;
         for (; imageIndex < this.state.data.length; imageIndex++) {
             if (title === this.state.data[imageIndex].title) {
@@ -120,49 +128,77 @@ class galleryScreen extends React.Component {
     }
 
     render() {
+        const {lightboxOpen, lightboxImage} = this.state;
+
+        console.log(lightboxImage)
+
         return (
             <View>
-                <Header style={Styles.headerBackground}>
-                    <Body>
-                    <Title style={Styles.header}>Photo Gallery</Title>
-                    </Body>
-                </Header>
-                <Tabs
-                    renderTabBar={() => <ScrollableTab
-                        style={[Styles.headerBackground, {marginTop: 0}]}
-                    />}
-                    locked={true}
-                    initialPage={0}
-                    page={this.state.activeTab}
-                    style={{flex: 0}}>
-                    {
-                        this.state.tabs.map((tab) => {
-                            return (
-                                <Tab
-                                    tabStyle={Styles.headerBackground}
-                                    activeTabStyle={Styles.headerBackground}
-                                    topTabBarTextColor="#f00"
-                                    topTabBarActiveTextColor="#f00"
-                                    heading={
-                                        <TabHeading style={Styles.headerBackground}>
-                                            <TouchableHighlight onPress={() => this._onTabPressed(tab)}>
-                                            <Text style = {Styles.tabTitle}>{tab}</Text>
-                                            </TouchableHighlight>
-                                        </TabHeading>
-                                    }
-                                    key={tab}
-                                />
-                            )
-                        })
-                    }
-                </Tabs>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderRow.bind(this)}
-                    onEndReached={this._onEndReached.bind(this)}
-                    onScroll={this._onScroll.bind(this)}
-                    ref={ref => this.listView = ref}
-                />
+                {
+                    lightboxOpen ? (
+                        <ImageZoom cropWidth={window.width}
+                                   cropHeight={window.height}
+                                   imageWidth={window.width}
+                                   imageHeight={window.height / 3}
+                                   enableSwipeDown={true}
+                                   onSwipeDown={() => {
+                                       this.setState({
+                                           lightboxOpen: false
+                                       })
+                                   }}
+                                   swipeDownThreshold={1}
+                                   style={{backgroundColor: '#000'}}
+                        >
+                            <Image style={Styles.image}
+                                   source={{uri: lightboxImage}}/>
+                        </ImageZoom>
+                    ) : (
+                        <View>
+                            <Header style={Styles.headerBackground}>
+                                <Body>
+                                <Title style={Styles.header}>Photo Gallery</Title>
+                                </Body>
+                            </Header>
+                            <Tabs
+                                renderTabBar={() => <ScrollableTab
+                                    style={[Styles.headerBackground, {marginTop: 0}]}
+                                />}
+                                locked={true}
+                                initialPage={0}
+                                page={this.state.activeTab}
+                                style={{flex: 0}}>
+                                {
+                                    this.state.tabs.map((tab) => {
+                                        return (
+                                            <Tab
+                                                tabStyle={Styles.headerBackground}
+                                                activeTabStyle={Styles.headerBackground}
+                                                topTabBarTextColor="#f00"
+                                                topTabBarActiveTextColor="#f00"
+                                                heading={
+                                                    <TabHeading style={Styles.headerBackground}>
+                                                        <TouchableHighlight onPress={() => this._onTabPressed(tab)}>
+                                                            <Text style={Styles.tabTitle}>{tab}</Text>
+                                                        </TouchableHighlight>
+                                                    </TabHeading>
+                                                }
+                                                key={tab}
+                                            />
+                                        )
+                                    })
+                                }
+                            </Tabs>
+
+                            <ListView
+                                dataSource={this.state.dataSource}
+                                renderRow={this._renderRow.bind(this)}
+                                onEndReached={this._onEndReached.bind(this)}
+                                onScroll={this._onScroll.bind(this)}
+                                ref={ref => this.listView = ref}
+                            />
+                        </View>
+                    )
+                }
             </View>
         )
     }
